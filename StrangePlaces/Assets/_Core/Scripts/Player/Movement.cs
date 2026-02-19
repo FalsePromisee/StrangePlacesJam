@@ -2,12 +2,10 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    [Header("Movement details")]
     [SerializeField] private float _moveSpeed = 5f;
     [SerializeField] private float _jumpForce = 5f;
     [SerializeField] private float _gravity = 9f;
 
-    [Header("Camera details")]
     [SerializeField] private float _sensetivity;
 
     private Transform _playerCamer;
@@ -28,15 +26,13 @@ public class Movement : MonoBehaviour
 
     private void Update()
     {
-        transform.Rotate(0, Input.GetAxis("Mouse X") * _sensetivity, 0);
+        CameraRotation();
+        PlayerMovement();
 
-        _playerCamer.Rotate(-Input.GetAxis("Mouse Y") * _sensetivity, 0, 0);
+    }
 
-        if (_playerCamer.localRotation.eulerAngles.y != 0)
-        {
-            _playerCamer.Rotate(Input.GetAxis("Mouse Y") * _sensetivity, 0, 0);
-        }
-
+    private void PlayerMovement()
+    {
         moveDirection = new Vector3(Input.GetAxis("Horizontal") * _moveSpeed, moveDirection.y, Input.GetAxis("Vertical") * _moveSpeed);
         moveDirection = transform.TransformDirection(moveDirection);
 
@@ -54,6 +50,17 @@ public class Movement : MonoBehaviour
 
         moveDirection.y -= _gravity * Time.deltaTime;
         _playerController.Move(moveDirection * Time.deltaTime);
+    }
 
+    private void CameraRotation()
+    {
+        transform.Rotate(0, Input.GetAxis("Mouse X") * _sensetivity, 0);
+
+        _playerCamer.Rotate(-Input.GetAxis("Mouse Y") * _sensetivity, 0, 0);
+
+        if (_playerCamer.localRotation.eulerAngles.y != 0)
+        {
+            _playerCamer.Rotate(Input.GetAxis("Mouse Y") * _sensetivity, 0, 0);
+        }
     }
 }
