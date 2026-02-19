@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
@@ -63,4 +64,17 @@ public class Movement : MonoBehaviour
             _playerCamer.Rotate(Input.GetAxis("Mouse Y") * _sensetivity, 0, 0);
         }
     }
+
+    public void PauseController() => StartCoroutine(PauseContorllerCoroutine());
+
+    private IEnumerator PauseContorllerCoroutine()
+    {
+        _playerController.enabled = false;
+        yield return new WaitForSeconds(0.05f);
+        _playerController.enabled = true;
+    }
+
+
+
+
 }
