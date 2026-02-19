@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PortalView : MonoBehaviour
 {
@@ -25,9 +25,16 @@ public class PortalView : MonoBehaviour
         lookerPosition = new Vector3(-lookerPosition.x, lookerPosition.y, -lookerPosition.z);
         portalView.transform.localPosition = lookerPosition;
 
-        Quaternion diffrence = transform.rotation * Quaternion.Inverse(otherPortal.transform.rotation * Quaternion.Euler(0, 0, 0));
+
+        Quaternion diffrence = transform.rotation * Quaternion.Inverse(otherPortal.transform.rotation * Quaternion.Euler(0, 180, 0));
         portalView.transform.rotation = diffrence * Camera.main.transform.rotation;
 
         portalView.nearClipPlane = lookerPosition.magnitude;
+        
     }
 }
+    
+
+
+
+
