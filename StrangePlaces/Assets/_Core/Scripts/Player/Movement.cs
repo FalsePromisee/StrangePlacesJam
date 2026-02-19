@@ -1,0 +1,59 @@
+using UnityEngine;
+
+public class Movement : MonoBehaviour
+{
+    [Header("Movement details")]
+    [SerializeField] private float _moveSpeed = 5f;
+    [SerializeField] private float _jumpForce = 5f;
+    [SerializeField] private float _gravity = 9f;
+
+    [Header("Camera details")]
+    [SerializeField] private float _sensetivity;
+
+    private Transform _playerCamer;
+    private CharacterController _playerController;
+
+    private Vector3 moveDirection;
+    private void Awake()
+    {
+        _playerController = GetComponent<CharacterController>();
+        _playerCamer = GetComponentInChildren<Camera>().transform;
+    }
+
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    private void Update()
+    {
+        transform.Rotate(0, Input.GetAxis("Mouse X") * _sensetivity, 0);
+
+        _playerCamer.Rotate(-Input.GetAxis("Mouse Y") * _sensetivity, 0, 0);
+
+        if (_playerCamer.localRotation.eulerAngles.y != 0)
+        {
+            _playerCamer.Rotate(Input.GetAxis("Mouse Y") * _sensetivity, 0, 0);
+        }
+
+        moveDirection = new Vector3(Input.GetAxis("Horizontal") * _moveSpeed, moveDirection.y, Input.GetAxis("Vertical") * _moveSpeed);
+        moveDirection = transform.TransformDirection(moveDirection);
+
+        if (_playerController.isGrounded)
+        {
+            if (Input.GetKey(KeyCode.Space))
+            {
+                moveDirection.y = _jumpForce;
+            }
+            else
+            {
+                moveDirection.y = 0;
+            }
+        }
+
+        moveDirection.y -= _gravity * Time.deltaTime;
+        _playerController.Move(moveDirection * Time.deltaTime);
+
+    }
+}
