@@ -70,7 +70,7 @@ public class Movement : MonoBehaviour
     private IEnumerator PauseContorllerCoroutine()
     {
         _playerController.enabled = false;
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.01f);
         _playerController.enabled = true;
     }
 
