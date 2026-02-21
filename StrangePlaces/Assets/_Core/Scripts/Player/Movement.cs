@@ -11,12 +11,14 @@ public class Movement : MonoBehaviour
 
     private Transform _playerCamer;
     private CharacterController _playerController;
+    private Gun _gun;
 
     private Vector3 moveDirection;
     private void Awake()
     {
         _playerController = GetComponent<CharacterController>();
         _playerCamer = GetComponentInChildren<Camera>().transform;
+        _gun = GetComponentInChildren<Gun>();
     }
 
     private void Start()
@@ -29,7 +31,7 @@ public class Movement : MonoBehaviour
     {
         CameraRotation();
         PlayerMovement();
-
+        Shoot();
     }
 
     private void PlayerMovement()
@@ -74,6 +76,13 @@ public class Movement : MonoBehaviour
         _playerController.enabled = true;
     }
 
+    private void Shoot()
+    {
+        if (Input.GetButtonDown("Fire1"))
+        {
+            _gun.Shoot();
+        }
+    }
 
 
 
